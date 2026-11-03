@@ -160,7 +160,9 @@ const socials = computed(() =>
     a {
       color: rgba($surface, 0.8);
       transition: color 0.2s ease;
-      min-height: 28px;
+      min-height: 44px; // objetivo táctil
+      display: inline-flex;
+      align-items: center;
 
       &:hover {
         color: $lime;
