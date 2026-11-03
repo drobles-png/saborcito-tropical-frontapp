@@ -1,7 +1,10 @@
-// Solo variables. Las fuentes se cargan con <link> en index.html: este archivo
-// se inyecta en cada SFC vía vite.config.ts, así que no debe emitir CSS.
+// Solo variables. Las fuentes se cargan con <link> en index.html.
+// Cocogoose (logo) no es web: Fredoka comparte sus terminales redondeadas.
+// Calibri es la secundaria del manual; en web usamos Plus Jakarta Sans.
+// Caveat Brush replica el trazo a pincel del menú ("Colección", "especial", "combo").
 
-$font-display: 'Fraunces', Georgia, serif;
-$font-principal: 'Montserrat', system-ui, sans-serif;
+$font-display: 'Fredoka', 'Arial Rounded MT Bold', system-ui, sans-serif;
+$font-principal: 'Plus Jakarta Sans', system-ui, sans-serif;
+$font-script: 'Caveat Brush', cursive;
 $font-secondary: $font-principal;
 $font-body: $font-principal;
