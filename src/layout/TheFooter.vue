@@ -17,7 +17,7 @@ const socials = computed(() =>
   <footer class="footer">
     <div class="footer__band" aria-hidden="true">
       <div class="footer__band-track">
-        <img v-for="(t, i) in [...tiles, ...tiles]" :key="i" :src="t" alt="" width="190" height="220" loading="lazy" />
+        <img v-for="(t, i) in [...tiles, ...tiles, ...tiles, ...tiles, ...tiles, ...tiles]" :key="i" :src="t" alt="" width="190" height="220" loading="lazy" />
       </div>
     </div>
 
@@ -97,7 +97,7 @@ const socials = computed(() =>
   &__band-track {
     @include flex(row, center, flex-start, 0.6rem);
     width: max-content;
-    animation: band 40s linear infinite;
+    animation: band 60s linear infinite;
 
     img {
       height: 54px;
