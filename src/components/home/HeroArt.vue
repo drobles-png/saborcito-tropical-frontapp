@@ -22,7 +22,7 @@ const tiles = [3, 6, 9]
 
 useGsap(root, ({ motion, hover }) => {
   if (!motion) return
-  const q = gsap.utils.selector(root)
+  const q = gsap.utils.selector(root.value)
 
   // Entrada: el splash estalla, la burger cae con rebote y aplasta, los satélites saltan.
   gsap
