@@ -16,7 +16,7 @@ const stickerPrice = computed(
 
 useGsap(root, ({ motion }) => {
   if (!motion) return
-  const q = gsap.utils.selector(root)
+  const q = gsap.utils.selector(root.value)
 
   // Titular letra a letra; autoSplit re-parte al cargar la fuente o cambiar el ancho.
   SplitText.create(q('.hero__line--split'), {
@@ -104,12 +104,32 @@ useGsap(root, ({ motion }) => {
     }
   }
 
+  // Móvil: el bloque de texto se "disuelve" (display: contents) para meter la burger
+  // justo bajo el titular con order. Desktop: columna de texto a la izquierda.
   &__copy {
-    @include flex(column, flex-start, flex-start, 1rem);
+    display: contents;
 
     @include from('lg') {
+      @include flex(column, flex-start, flex-start, 1rem);
       flex: 1 1 46%;
     }
+  }
+
+  &__eyebrow {
+    align-self: flex-start;
+  }
+
+  &__lead,
+  &__actions {
+    order: 2;
+
+    @include from('lg') {
+      order: 0;
+    }
+  }
+
+  &__stats {
+    order: 3;
   }
 
   &__eyebrow {
@@ -127,8 +147,12 @@ useGsap(root, ({ motion }) => {
     @include flex(column, flex-start, flex-start);
     font-family: $font-display;
     font-weight: 700;
-    font-size: clamp(3.2rem, 1rem + 11vw, 8.6rem);
+    font-size: clamp(3.2rem, 1rem + 11vw, 6rem);
     line-height: 0.86;
+
+    @include from('lg') {
+      font-size: clamp(4.5rem, 1rem + 5.6vw, 7.6rem);
+    }
     letter-spacing: -0.03em;
     color: $ink;
   }
@@ -176,8 +200,15 @@ useGsap(root, ({ motion }) => {
   }
 
   &__art {
+    order: 1;
+    width: 92%;
+    margin: -1rem auto -1.25rem;
+
     @include from('lg') {
+      order: 0;
       flex: 1 1 50%;
+      width: auto;
+      margin: 0;
     }
   }
 
