@@ -18,28 +18,26 @@ useGsap(root, ({ motion }) => {
   if (!motion) return
   const q = gsap.utils.selector(root.value)
 
-  // Titular letra a letra; autoSplit re-parte al cargar la fuente o cambiar el ancho.
-  SplitText.create(q('.hero__line--split'), {
-    type: 'chars',
-    autoSplit: true,
-    onSplit: (self) =>
-      gsap.from(self.chars, {
-        yPercent: 110,
-        rotation: () => gsap.utils.random(-25, 25),
-        autoAlpha: 0,
-        stagger: 0.035,
-        duration: 0.8,
-        ease: 'back.out(2)',
-        delay: 0.1,
-      }),
-  })
-
-  gsap
-    .timeline({ delay: 0.45 })
-    .from(q('.hero__script'), { scale: 0.3, rotation: -14, autoAlpha: 0, duration: 0.8, ease: 'elastic.out(1, 0.55)' })
-    .from(q('.hero__lead'), { y: 24, autoAlpha: 0, duration: 0.6, ease: 'power3.out' }, 0.35)
-    .from(q('.hero__actions > *'), { y: 30, autoAlpha: 0, stagger: 0.08, duration: 0.6, ease: 'back.out(1.8)' }, 0.5)
-    .from(q('.hero__stat'), { y: 30, autoAlpha: 0, stagger: 0.08, duration: 0.6, ease: 'power3.out' }, 0.7)
+  // Titular letra a letra, una sola vez. Con autoSplit, al llegar la fuente web se re-partía
+  // y la animación arrancaba de nuevo: eso era el "carga lento" en el celular.
+  // Todo arranca cuando llegó la fuente de marca (tope 1.2 s): así no se anima con la fuente
+  // de respaldo para luego saltar a Fredoka.
+  const split = SplitText.create(q('.hero__line--split'), { type: 'chars' })
+  const intro = gsap
+    .timeline({ paused: true })
+    .from(split.chars, {
+      yPercent: 110,
+      rotation: () => gsap.utils.random(-25, 25),
+      autoAlpha: 0,
+      stagger: 0.035,
+      duration: 0.8,
+      ease: 'back.out(2)',
+    })
+    .from(q('.hero__script'), { scale: 0.3, rotation: -14, autoAlpha: 0, duration: 0.8, ease: 'elastic.out(1, 0.55)' }, 0.35)
+    .from(q('.hero__actions > *'), { y: 30, autoAlpha: 0, stagger: 0.08, duration: 0.6, ease: 'back.out(1.8)' }, 0.6)
+    .from(q('.hero__lead'), { y: 24, autoAlpha: 0, duration: 0.6, ease: 'power3.out' }, 0.7)
+    .from(q('.hero__stat'), { y: 30, autoAlpha: 0, stagger: 0.08, duration: 0.6, ease: 'power3.out' }, 0.8)
+  Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 1200))]).then(() => intro.play())
 
   // Al bajar, el texto se aleja un poco: profundidad sin marear.
   gsap.to(q('.hero__copy'), {
