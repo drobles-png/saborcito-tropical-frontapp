@@ -2,12 +2,13 @@
 import { computed, nextTick, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import CategoryBar from '@/components/menu/CategoryBar.vue'
+import LastOrderStrip from '@/components/menu/LastOrderStrip.vue'
 import CardRow from '@/components/menu/CardRow.vue'
 import ProductCard from '@/components/menu/ProductCard.vue'
 import ShopSkeleton from '@/components/menu/ShopSkeleton.vue'
 import { useMenu } from '@/composables/useMenu'
 import { useScrollSpy } from '@/composables/useScrollSpy'
-import { revealBatch, ScrollTrigger, useGsap } from '@/composables/useGsap'
+import { gsap, revealBatch, ScrollTrigger, useGsap } from '@/composables/useGsap'
 import { normalize } from '@/utils/text'
 import { site } from '@/config/site'
 import { home } from '@/config/home'
@@ -41,7 +42,16 @@ function goTo(slug: string) {
 }
 
 // Al filtrar cambian las alturas: las entradas pendientes deben recalcular su posición.
-watch(query, () => nextTick(() => ScrollTrigger.refresh()))
+// Al buscar, las tarjetas que el reveal aún no mostró quedarían invisibles: se muestran todas.
+watch(query, () =>
+  nextTick(() => {
+    // sin tween: el reveal del scroll le peleaba la opacidad y dejaba tarjetas tenues
+    const cards = '.shop__section .card'
+    gsap.killTweensOf(cards)
+    gsap.set(cards, { autoAlpha: 1, y: 0, clearProps: 'transform' })
+    ScrollTrigger.refresh()
+  }),
+)
 
 // ?c=slug salta a la categoría apenas está el menú pintado.
 watch(
@@ -70,6 +80,7 @@ useGsap(
 
 <template>
   <div ref="root" class="shop">
+    <LastOrderStrip />
     <header class="shop__head">
       <h1 class="shop__title">{{ site.shop.title }}</h1>
       <label class="shop__search">
