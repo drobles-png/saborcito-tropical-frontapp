@@ -37,7 +37,6 @@ useGsap(root, ({ motion }) => {
   gsap
     .timeline({ delay: 0.45 })
     .from(q('.hero__script'), { scale: 0.3, rotation: -14, autoAlpha: 0, duration: 0.8, ease: 'elastic.out(1, 0.55)' })
-    .from(q('.hero__eyebrow'), { y: -20, autoAlpha: 0, duration: 0.5, ease: 'power3.out' }, 0)
     .from(q('.hero__lead'), { y: 24, autoAlpha: 0, duration: 0.6, ease: 'power3.out' }, 0.35)
     .from(q('.hero__actions > *'), { y: 30, autoAlpha: 0, stagger: 0.08, duration: 0.6, ease: 'back.out(1.8)' }, 0.5)
     .from(q('.hero__stat'), { y: 30, autoAlpha: 0, stagger: 0.08, duration: 0.6, ease: 'power3.out' }, 0.7)
@@ -56,7 +55,6 @@ useGsap(root, ({ motion }) => {
   <section ref="root" class="hero">
     <div class="hero__inner">
       <div class="hero__copy">
-        <p class="hero__eyebrow"><i class="fa-solid fa-fire-flame-curved" aria-hidden="true"></i> {{ hero.eyebrow }}</p>
         <h1 class="hero__title">
           <span class="hero__line hero__line--split">{{ hero.titleTop }}</span>
           <span class="hero__script">{{ hero.titleScript }}</span>
@@ -67,7 +65,7 @@ useGsap(root, ({ motion }) => {
           <RouterLink to="/menu" class="btn btn--cta hero__cta">
             {{ hero.ctaPrimary }} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
           </RouterLink>
-          <RouterLink to="/menu" class="btn btn--ghost">{{ hero.ctaSecondary }}</RouterLink>
+          <RouterLink to="/pedido" class="btn btn--ghost">{{ hero.ctaSecondary }}</RouterLink>
         </div>
       </div>
 
@@ -115,32 +113,25 @@ useGsap(root, ({ motion }) => {
     }
   }
 
-  &__eyebrow {
-    align-self: flex-start;
-  }
-
-  &__lead,
+  // Móvil: los CTA suben antes del texto para quedar dentro del primer pantallazo.
   &__actions {
     order: 2;
-
-    @include from('lg') {
-      order: 0;
-    }
   }
 
-  &__stats {
+  &__lead {
     order: 3;
   }
 
-  &__eyebrow {
-    @include flex(row, center, flex-start, 0.45rem);
-    font-family: $font-display;
-    font-weight: 600;
-    font-size: $text-sm;
-    background: $ink;
-    color: $lime;
-    padding: 0.4rem 0.9rem;
-    border-radius: $radius-pill;
+  &__stats {
+    order: 4;
+  }
+
+  &__lead,
+  &__actions,
+  &__stats {
+    @include from('lg') {
+      order: 0;
+    }
   }
 
   &__title {
@@ -201,7 +192,8 @@ useGsap(root, ({ motion }) => {
 
   &__art {
     order: 1;
-    width: 92%;
+    // tope por alto de pantalla: en celulares bajos la burger no empuja los CTA fuera
+    width: min(92%, 42svh);
     // abajo deja aire: la salchipapa sobresale y con el parallax tapaba el texto
     margin: -1rem auto 1.75rem;
 
