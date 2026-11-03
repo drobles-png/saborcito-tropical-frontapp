@@ -120,11 +120,6 @@ $side-w: 248px;
     @include flex(row, center, center);
     box-shadow: 0 4px 0 rgba($lime, 0.9);
     transform: rotate(-1.5deg);
-    transition: transform 0.25s $ease;
-
-    &:hover {
-      transform: rotate(0deg) scale(1.02);
-    }
 
     img {
       height: 52px;
