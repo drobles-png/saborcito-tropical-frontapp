@@ -10,7 +10,7 @@ const years = ref(20) // sin JS / con reduced-motion se ve el número final
 
 useGsap(root, ({ motion }) => {
   if (!motion) return
-  const q = gsap.utils.selector(root)
+  const q = gsap.utils.selector(root.value)
   const counter = { v: 0 }
   years.value = 0
   gsap
