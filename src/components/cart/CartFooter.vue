@@ -59,6 +59,7 @@ const blocked = computed(() => goal.value?.kind === 'min')
 
 <style scoped lang="scss">
 .foot {
+  margin-top: auto; // anclado al fondo del drawer aunque haya pocas líneas
   padding: 1rem 1.25rem calc(1rem + env(safe-area-inset-bottom));
   border-top: 1px solid $line;
   background: $surface;
