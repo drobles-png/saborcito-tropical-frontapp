@@ -9,7 +9,7 @@ const copy = site.sections.yogurt
 
 useGsap(root, ({ motion }) => {
   if (!motion) return
-  const q = gsap.utils.selector(root)
+  const q = gsap.utils.selector(root.value)
   // El vaso gira y crece mientras la sección cruza la pantalla.
   gsap.fromTo(
     q('.yog__cup'),
