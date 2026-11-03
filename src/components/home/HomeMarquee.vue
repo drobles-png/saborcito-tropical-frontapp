@@ -9,7 +9,7 @@ const tileFor = (i: number) => `/brand/tile-${(i % 10) + 1}.webp`
 
 useGsap(root, ({ motion }) => {
   if (!motion) return
-  const q = gsap.utils.selector(root)
+  const q = gsap.utils.selector(root.value)
   // Cada pista está duplicada: mover -50% y repetir = cinta infinita sin costura.
   const front = gsap.to(q('.mq__band--front .mq__track'), { xPercent: -50, duration: 28, ease: 'none', repeat: -1 })
   const back = gsap.fromTo(q('.mq__band--back .mq__track'), { xPercent: -50 }, { xPercent: 0, duration: 34, ease: 'none', repeat: -1 })
