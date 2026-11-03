@@ -21,14 +21,14 @@ useGsap(
   root,
   ({ motion }) => {
     if (!motion) return
+    // Entrada corta y sin giro: dentro de un carril horizontal, deslizar y rotar se leía raro.
     gsap.from(gsap.utils.toArray<HTMLElement>('.cats__card', root.value), {
-      x: 120,
-      rotation: 6,
+      y: 24,
       autoAlpha: 0,
-      stagger: 0.07,
-      duration: 0.8,
+      stagger: 0.05,
+      duration: 0.5,
       clearProps: 'transform',
-      ease: 'back.out(1.5)',
+      ease: 'power3.out',
       scrollTrigger: { trigger: rail.value, start: 'top 85%', once: true },
     })
   },
