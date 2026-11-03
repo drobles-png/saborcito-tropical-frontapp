@@ -9,7 +9,7 @@ const copy = site.sections.how
 
 useGsap(root, ({ motion }) => {
   if (!motion) return
-  const q = gsap.utils.selector(root)
+  const q = gsap.utils.selector(root.value)
   const tl = gsap.timeline({ scrollTrigger: { trigger: q('.how__steps')[0], start: 'top 80%', once: true } })
   tl.from(q('.how__step'), { y: 60, autoAlpha: 0, stagger: 0.15, duration: 0.7, ease: 'back.out(1.6)' })
     .from(q('.how__num'), { scale: 0, rotation: -30, stagger: 0.15, duration: 0.6, ease: 'back.out(3)' }, 0.15)
