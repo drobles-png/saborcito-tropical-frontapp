@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { site } from '@/config/site'
 import { home } from '@/config/home'
@@ -8,6 +8,7 @@ import { useMenu } from '@/composables/useMenu'
 import { useBodyScroll } from '@/composables/useBodyScroll'
 import { useHeaderScroll } from '@/composables/useHeaderScroll'
 import MobileNav from './MobileNav.vue'
+import AnnouncementBar from './AnnouncementBar.vue'
 
 const route = useRoute()
 const cart = useCartStore()
@@ -19,13 +20,6 @@ const { compact, hidden } = useHeaderScroll(el, mobileOpen)
 useBodyScroll(mobileOpen)
 watch(() => route.fullPath, () => (mobileOpen.value = false))
 
-const status = computed(() => {
-  const s = settings.value
-  if (!s) return null
-  return s.storeOpen
-    ? { open: true, label: home.header.open, text: s.openingHours }
-    : { open: false, label: home.header.closed, text: s.closedMessage || s.openingHours }
-})
 </script>
 
 <template>
@@ -34,14 +28,7 @@ const status = computed(() => {
     class="header"
     :class="{ 'header--compact': compact, 'header--hidden': hidden, 'header--open': mobileOpen }"
   >
-    <div v-if="status || settings?.announcement" class="header__bar">
-      <span v-if="status" class="header__status" :class="{ 'header__status--open': status.open }">
-        <span class="header__dot" aria-hidden="true"></span>
-        <strong>{{ status.label }}</strong>
-        <span v-if="status.text" class="header__status-text">· {{ status.text }}</span>
-      </span>
-      <span v-if="settings?.announcement" class="header__announce">{{ settings.announcement }}</span>
-    </div>
+    <AnnouncementBar :settings="settings" />
 
     <div class="header__inner">
       <RouterLink to="/" class="header__logo" :aria-label="`${site.name}, inicio`">
@@ -63,7 +50,12 @@ const status = computed(() => {
           data-cart-target
           @click="cart.open = true"
         >
-          <i :key="`i${cart.bump}`" class="fa-solid fa-bag-shopping" :class="{ 'header__cart-icon--bump': cart.bump }" aria-hidden="true"></i>
+          <i
+            :key="`i${cart.bump}`"
+            class="fa-solid fa-bag-shopping"
+            :class="{ 'header__cart-icon--bump': cart.bump }"
+            aria-hidden="true"
+          ></i>
           <span v-if="cart.count" :key="`b${cart.bump}`" class="header__badge">{{ cart.count }}</span>
         </button>
         <button
@@ -123,55 +115,6 @@ const status = computed(() => {
     background: $lime;
   }
 
-  &__bar {
-    @include flex(row, center, center, 0.75rem);
-    background: $ink;
-    color: $surface;
-    font-size: $text-xs;
-    padding: 0.4rem 1rem;
-    min-height: 32px;
-    text-align: center;
-    overflow: hidden;
-  }
-
-  &__status {
-    @include flex(row, center, center, 0.35rem);
-    white-space: nowrap;
-    min-width: 0;
-  }
-
-  &__status-text {
-    overflow: hidden;
-    text-overflow: ellipsis;
-
-    @include until('sm') {
-      display: none;
-    }
-  }
-
-  &__dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: $gray;
-    flex-shrink: 0;
-  }
-
-  &__status--open &__dot {
-    background: $lime;
-    box-shadow: 0 0 0 0 rgba($lime, 0.7);
-    animation: pulse 1.8s ease-out infinite;
-  }
-
-  &__announce {
-    font-weight: 700;
-    color: $lime;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    min-width: 0;
-  }
-
   &__inner {
     @include container;
     @include flex(row, center, space-between, 1rem);
@@ -191,6 +134,13 @@ const status = computed(() => {
         height: 46px;
       }
     }
+  }
+
+  // Sobre el lima del menú abierto, el logo va en su pegatina blanca.
+  &--open &__logo {
+    background: $surface;
+    border-radius: $radius-sm;
+    padding: 0.2rem 0.5rem;
   }
 
   &--compact &__logo {
@@ -328,12 +278,6 @@ const status = computed(() => {
   }
   60% {
     transform: rotate(10deg);
-  }
-}
-
-@keyframes pulse {
-  to {
-    box-shadow: 0 0 0 8px rgba($lime, 0);
   }
 }
 </style>
