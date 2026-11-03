@@ -4,6 +4,7 @@ import { useToastStore } from '@/stores/toast'
 import { admin } from '@/config/admin'
 
 const POLL_MS = 15000
+const HIDDEN_POLL_MS = 60000
 const SOUND_KEY = 'admin_sound'
 
 // Estado de módulo: el layout sondea y la vista de pedidos lo lee.
@@ -109,8 +110,9 @@ function schedule() {
 
 function onVisibility() {
   if (document.hidden) {
+    // la cocina suele tener el panel en otra pestaña: se sigue sondeando, más espaciado
     clearInterval(timer)
-    timer = undefined
+    timer = setInterval(poll, HIDDEN_POLL_MS)
   } else {
     poll()
     schedule()
