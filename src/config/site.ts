@@ -35,7 +35,7 @@ export const site = {
     titleBottom: 'antoja',
     lead: 'Salchipapas, burgers, alitas y yogurt tropical. Pide en dos toques y te lo llevamos calientito.',
     ctaPrimary: 'Pedir ahora',
-    ctaSecondary: 'Ver el menú',
+    ctaSecondary: 'Sigue tu pedido',
     stats: [
       { value: '20', label: 'años sirviendo' },
       { value: '43', label: 'antojos en el menú' },
