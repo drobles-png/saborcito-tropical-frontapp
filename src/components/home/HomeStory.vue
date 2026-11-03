@@ -37,7 +37,6 @@ useGsap(root, ({ motion }) => {
         <span class="story__label">{{ home.story.counterLabel }}</span>
       </div>
       <div class="story__copy">
-        <p class="story__eyebrow">{{ copy.eyebrow }}</p>
         <h2 class="story__title">{{ copy.title }}</h2>
         <p class="story__text">{{ copy.text }}</p>
         <p class="story__since">{{ home.story.since }}</p>
@@ -107,10 +106,6 @@ useGsap(root, ({ motion }) => {
 
   &__copy {
     @include flex(column, flex-start, flex-start, 0.75rem);
-  }
-
-  &__eyebrow {
-    @include eyebrow;
   }
 
   &__title {
