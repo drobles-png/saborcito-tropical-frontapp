@@ -88,10 +88,6 @@ useGsap(
     @include container;
   }
 
-  :deep(.shead__eyebrow) {
-    color: $surface;
-  }
-
   :deep(.shead__lead) {
     color: rgba($surface, 0.9);
   }
