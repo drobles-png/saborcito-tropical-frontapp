@@ -6,6 +6,7 @@ import { useBodyScroll } from '@/composables/useBodyScroll'
 import { useDragToClose } from '@/composables/useDragToClose'
 import CartLine from './CartLine.vue'
 import CartFooter from './CartFooter.vue'
+import CartSuggestions from './CartSuggestions.vue'
 import { site } from '@/config/site'
 import { checkoutCopy } from '@/config/checkout'
 
@@ -90,6 +91,7 @@ function onKeydown(e: KeyboardEvent) {
             <TransitionGroup tag="ul" name="line" class="drawer__lines">
               <CartLine v-for="line in cart.lines" :key="line.key" :line="line" />
             </TransitionGroup>
+            <CartSuggestions @pick="(needsSheet) => needsSheet && close()" />
             <CartFooter @checkout="goCheckout" />
           </template>
         </aside>
@@ -189,7 +191,7 @@ function onKeydown(e: KeyboardEvent) {
 
   &__lines {
     position: relative;
-    flex: 1;
+    flex: 0 1 auto; // las sugerencias van pegadas debajo; el pie se ancla abajo solo
     overflow-y: auto;
     padding: 0 1.25rem;
     overscroll-behavior: contain;
