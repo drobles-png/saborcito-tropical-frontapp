@@ -80,7 +80,8 @@ defineEmits<{ close: [] }>()
     transition-delay: calc(0.12s + var(--i) * 0.05s);
 
     &.router-link-exact-active {
-      color: $coral-deep;
+      text-decoration: underline wavy $coral-deep 3px;
+      text-underline-offset: 0.18em;
     }
   }
 
