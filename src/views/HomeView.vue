@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import LastOrderStrip from '@/components/menu/LastOrderStrip.vue'
 import HomeHero from '@/components/home/HomeHero.vue'
 import HomeMarquee from '@/components/home/HomeMarquee.vue'
 import HomeCategories from '@/components/home/HomeCategories.vue'
@@ -13,6 +14,7 @@ import HomeVisit from '@/components/home/HomeVisit.vue'
 
 <template>
   <div class="home">
+    <LastOrderStrip />
     <HomeHero />
     <HomeMarquee />
     <HomeCategories />
