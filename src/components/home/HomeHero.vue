@@ -202,7 +202,8 @@ useGsap(root, ({ motion }) => {
   &__art {
     order: 1;
     width: 92%;
-    margin: -1rem auto -1.25rem;
+    // abajo deja aire: la salchipapa sobresale y con el parallax tapaba el texto
+    margin: -1rem auto 1.75rem;
 
     @include from('lg') {
       order: 0;
