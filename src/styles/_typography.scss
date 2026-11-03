@@ -2,7 +2,7 @@
 @use 'fonts.module.scss' as *;
 
 // Escala tipográfica fluida — sin media queries para el tamaño de texto.
-$text-xs: clamp(0.72rem, 0.7rem + 0.1vw, 0.78rem);
+$text-xs: clamp(0.8rem, 0.78rem + 0.1vw, 0.84rem); // piso de 12.8px: nada ilegible en móvil
 $text-sm: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
 $text-base: clamp(0.95rem, 0.9rem + 0.25vw, 1.06rem);
 $text-lg: clamp(1.1rem, 1rem + 0.5vw, 1.3rem);
