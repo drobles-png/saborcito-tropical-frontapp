@@ -21,7 +21,8 @@ defineProps<{ id: string; label: string; hint?: string; error?: string; optional
 
 <style scoped lang="scss">
 .field {
-  flex: 1 1 220px;
+  // en columna, una base de 220px se volvía altura y abría huecos; las filas las arma el padre
+  flex: 0 0 auto;
   min-width: 0;
 
   &__label {
