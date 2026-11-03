@@ -7,6 +7,7 @@ import ProductBadges from './ProductBadges.vue'
 import ProductOptions from './ProductOptions.vue'
 import { useProductForm } from '@/composables/useProductForm'
 import { flyToCart } from '@/composables/useFlyToCart'
+import { useCartStore } from '@/stores/cart'
 import { formatCents, imageUrl } from '@/utils/format'
 import { site } from '@/config/site'
 import { home } from '@/config/home'
@@ -15,6 +16,7 @@ import type { Product } from '@/types'
 const props = defineProps<{ product: Product; mode?: 'sheet' | 'page' }>()
 const emit = defineEmits<{ added: [] }>()
 
+const cart = useCartStore()
 const form = useProductForm(toRef(props, 'product'))
 const { choices, qty, note, showErrors, missing, total } = form
 const root = ref<HTMLElement | null>(null)
@@ -37,7 +39,7 @@ async function add() {
 </script>
 
 <template>
-  <div ref="root" class="pd" :class="`pd--${mode ?? 'sheet'}`">
+  <div ref="root" class="pd" :class="[`pd--${mode ?? 'sheet'}`, { 'pd--lifted': mode === 'page' && cart.count > 0 }]">
     <div class="pd__media" :class="{ skeleton: !loaded }">
       <img
         ref="img"
@@ -212,6 +214,13 @@ async function add() {
     @include from('md') {
       margin-inline: 0;
       padding-inline: 0;
+    }
+  }
+
+  // En la página, la CartBar fija (móvil, ~72px) taparía la barra de compra.
+  &--lifted &__bar {
+    @include until('md') {
+      bottom: 76px;
     }
   }
 
