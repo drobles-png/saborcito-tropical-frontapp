@@ -83,7 +83,8 @@ async function poll() {
   try {
     const { items } = await adminService.orders({ since, limit: 20 })
     if (items.length) {
-      since = items[0]!.createdAt
+      // El API filtra con $gte: +1 ms para no volver a avisar el mismo pedido
+      since = new Date(new Date(items[0]!.createdAt).getTime() + 1).toISOString()
       // shortcut: los de tarjeta sin pagar no avisan (la cocina no los atiende); si se pagan después no suenan.
       const fresh = items.filter((o) => o.paymentMethod !== 'card' || o.paymentStatus === 'paid')
       if (fresh.length) {
