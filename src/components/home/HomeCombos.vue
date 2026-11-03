@@ -15,23 +15,24 @@ const combos = computed(() => products.value.filter((p) => p.badges.includes('co
 
 useGsap(
   root,
-  ({ motion }) => {
+  ({ motion, desktop }) => {
     if (!motion) return
     const q = gsap.utils.selector(root.value)
-    // El fondo tribal se desliza más lento que el contenido.
-    gsap.fromTo(q('.combos__bg'), { yPercent: -12 }, {
-      yPercent: 12,
-      ease: 'none',
-      scrollTrigger: { trigger: root.value, start: 'top bottom', end: 'bottom top', scrub: true },
-    })
+    // El fondo tribal se desliza más lento que el contenido (solo desktop: en el celular temblaba).
+    if (desktop) {
+      gsap.fromTo(q('.combos__bg'), { yPercent: -12 }, {
+        yPercent: 12,
+        ease: 'none',
+        scrollTrigger: { trigger: root.value, start: 'top bottom', end: 'bottom top', scrub: true },
+      })
+    }
     gsap.from(q('.combos__rail > *'), {
-      y: 80,
-      rotation: (i: number) => (i % 2 ? 5 : -5),
+      y: 32,
       autoAlpha: 0,
-      stagger: 0.08,
-      duration: 0.8,
+      stagger: 0.06,
+      duration: 0.55,
       clearProps: 'transform',
-      ease: 'back.out(1.6)',
+      ease: 'power3.out',
       scrollTrigger: { trigger: q('.combos__rail')[0], start: 'top 85%', once: true },
     })
   },
