@@ -124,7 +124,8 @@ async function add() {
 
   &--sheet &__media {
     margin: 0 auto;
-    width: min(100%, 420px);
+    // tope por alto: al abrir en el celular, los sabores obligatorios quedan a la vista
+    width: min(100%, 420px, 30svh);
 
     @include from('md') {
       top: 0;
