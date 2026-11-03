@@ -17,6 +17,10 @@
   --text: #{$ink};
   --text-soft: #{$ink-soft};
   --accent: #{$accent};
+  --lime: #{$lime};
+  --coral: #{$coral};
+  --ink: #{$ink};
+  --header-h: 64px;
   --border: #{$line};
 }
 
@@ -119,22 +123,51 @@ label {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  font-family: $font-principal;
-  font-size: 0.85rem;
+  gap: 0.55rem;
+  font-family: $font-display;
+  font-size: 1rem;
   font-weight: 600;
-  letter-spacing: 0.04em;
-  padding: 0.85rem 1.8rem;
+  letter-spacing: 0.01em;
+  padding: 0.85rem 1.6rem;
+  min-height: 48px; // objetivo táctil cómodo en móvil
   border-radius: $radius-pill;
-  @include transition;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform 0.18s $ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    color 0.2s ease;
 
-  &--primary {
-    background: $accent;
+  &:active {
+    transform: scale(0.96);
+  }
+
+  // CTA de compra: coral profundo, el color que abre el apetito
+  &--primary,
+  &--cta {
+    background: $cta;
     color: $surface;
+    box-shadow: 0 10px 24px -10px rgba($coral-deep, 0.7);
 
-    &:hover {
-      background: $accent-deep;
-      transform: translateY(-1px);
+    @media (hover: hover) {
+      &:hover {
+        background: darken($cta, 6%);
+        transform: translateY(-2px);
+      }
+    }
+  }
+
+  &--lime {
+    background: $lime;
+    color: $ink;
+
+    @media (hover: hover) {
+      &:hover {
+        background: $lime-light;
+        transform: translateY(-2px);
+      }
     }
   }
 
@@ -142,19 +175,24 @@ label {
     background: $ink;
     color: $surface;
 
-    &:hover {
-      background: $accent-deep;
-      transform: translateY(-1px);
+    @media (hover: hover) {
+      &:hover {
+        background: lighten($ink, 10%);
+        transform: translateY(-2px);
+      }
     }
   }
 
   &--ghost {
-    border: 1px solid $ink;
+    border: 2px solid currentColor;
     color: $ink;
 
-    &:hover {
-      background: $ink;
-      color: $surface;
+    @media (hover: hover) {
+      &:hover {
+        background: $ink;
+        border-color: $ink;
+        color: $surface;
+      }
     }
   }
 
@@ -163,9 +201,43 @@ label {
     color: $surface;
   }
 
+  &--sm {
+    min-height: 38px;
+    padding: 0.5rem 1rem;
+    font-size: 0.88rem;
+  }
+
+  &--block {
+    width: 100%;
+  }
+
   &:disabled {
     opacity: 0.45;
     pointer-events: none;
+  }
+}
+
+// Skeleton: brillo que barre. Prohibidos los spinners en todo el sitio.
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: $sand;
+  border-radius: $radius-sm;
+  color: transparent !important;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, rgba(#fff, 0.75), transparent);
+    animation: skeleton-sweep 1.3s ease-in-out infinite;
+  }
+}
+
+@keyframes skeleton-sweep {
+  to {
+    transform: translateX(100%);
   }
 }
 
