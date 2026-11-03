@@ -4,11 +4,13 @@ import PriceTag from '@/components/ui/PriceTag.vue'
 import { formatCents, imageUrl } from '@/utils/format'
 import { site } from '@/config/site'
 import { checkoutCopy } from '@/config/checkout'
+import { useLastOrder } from '@/composables/useLastOrder'
 import type { TrackedOrder } from '@/types'
 
 const props = defineProps<{ order: TrackedOrder }>()
 const copy = checkoutCopy.tracking
 const sum = checkoutCopy.checkout.summary
+const { reorder } = useLastOrder()
 
 const payStatus = computed(
   () => ({ paid: copy.paid, pending: copy.unpaid, failed: copy.failed })[props.order.paymentStatus],
@@ -69,6 +71,10 @@ const place = computed(() =>
         <dd>{{ order.notes }}</dd>
       </div>
     </dl>
+
+    <button type="button" class="btn btn--dark btn--block detail__again" @click="reorder(order)">
+      <i class="fa-solid fa-rotate-right" aria-hidden="true"></i> Pedir esto otra vez
+    </button>
   </section>
 </template>
 
@@ -186,5 +192,9 @@ const place = computed(() =>
       color: $danger;
     }
   }
+}
+
+.detail__again {
+  margin-top: 1.25rem;
 }
 </style>
