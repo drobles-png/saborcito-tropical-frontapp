@@ -71,9 +71,10 @@ function step(delta: number) {
     font-size: 1.1rem;
   }
 
+  // 40px visibles + el padding del contenedor: objetivo táctil cómodo con el pulgar
   &--sm &__btn {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     font-size: 0.72rem;
   }
 
