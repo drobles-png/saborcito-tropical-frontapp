@@ -1,5 +1,6 @@
 <script setup lang="ts">
 withDefaults(
+  // eyebrow se acepta pero no se pinta: el título carga solo (regla de la casa: nada de kickers)
   defineProps<{ eyebrow?: string; title: string; lead?: string; tone?: 'light' | 'dark'; center?: boolean }>(),
   { tone: 'light' },
 )
@@ -7,7 +8,6 @@ withDefaults(
 
 <template>
   <header class="shead" :class="[`shead--${tone}`, { 'shead--center': center }]" data-head>
-    <p v-if="eyebrow" class="shead__eyebrow">{{ eyebrow }}</p>
     <h2 class="shead__title">{{ title }}</h2>
     <p v-if="lead" class="shead__lead">{{ lead }}</p>
     <slot />
@@ -24,18 +24,6 @@ withDefaults(
     text-align: center;
   }
 
-  &__eyebrow {
-    @include eyebrow;
-    @include flex(row, center, flex-start, 0.5rem);
-
-    &::before {
-      content: '';
-      width: 22px;
-      height: 3px;
-      border-radius: 2px;
-      background: currentColor;
-    }
-  }
 
   &__title {
     @include display($display-md, 700);
@@ -49,10 +37,6 @@ withDefaults(
 
   &--dark {
     color: $surface;
-
-    .shead__eyebrow {
-      color: $lime;
-    }
 
     .shead__lead {
       color: rgba($surface, 0.75);
