@@ -50,7 +50,6 @@ useGsap(root, ({ motion }) => {
       </div>
 
       <div class="yog__copy">
-        <p class="yog__eyebrow">{{ copy.eyebrow }}</p>
         <h2 class="yog__title">{{ copy.title }}</h2>
         <p class="yog__script">{{ copy.script }}</p>
         <p class="yog__lead">{{ copy.lead }}</p>
@@ -134,10 +133,6 @@ useGsap(root, ({ motion }) => {
     @include from('lg') {
       flex: 1 1 55%;
     }
-  }
-
-  &__eyebrow {
-    @include eyebrow;
   }
 
   &__title {
