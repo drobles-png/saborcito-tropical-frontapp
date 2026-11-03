@@ -10,25 +10,11 @@ const copy = site.sections.yogurt
 useGsap(root, ({ motion }) => {
   if (!motion) return
   const q = gsap.utils.selector(root.value)
-  // El vaso gira y crece mientras la sección cruza la pantalla.
-  gsap.fromTo(
-    q('.yog__cup'),
-    { rotation: -18, scale: 0.75, yPercent: 10 },
-    {
-      rotation: 10,
-      scale: 1.05,
-      yPercent: -8,
-      ease: 'none',
-      scrollTrigger: { trigger: root.value, start: 'top bottom', end: 'bottom top', scrub: 0.5 },
-    },
-  )
-  gsap.fromTo(q('.yog__pan'), { xPercent: 40, rotation: 20 }, {
-    xPercent: -10,
-    rotation: -8,
-    ease: 'none',
-    scrollTrigger: { trigger: root.value, start: 'top bottom', end: 'bottom top', scrub: 0.5 },
-  })
-  gsap.to(q('.yog__burst'), { rotation: 360, duration: 30, ease: 'none', repeat: -1 })
+  // El vaso sube desde el fondo del círculo y queda ahí, derecho; los panes caen a su lado.
+  const tl = gsap.timeline({ scrollTrigger: { trigger: q('.yog__stage')[0], start: 'top 80%', once: true } })
+  tl.from(q('.yog__cup'), { yPercent: 70, duration: 0.9, ease: 'power3.out' })
+    .from(q('.yog__pan'), { y: -40, autoAlpha: 0, duration: 0.6, ease: 'power3.out' }, 0.35)
+  gsap.to(q('.yog__cup'), { y: -8, duration: 2.6, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: 1 })
   gsap.from(q('.yog__chip'), {
     scale: 0,
     autoAlpha: 0,
@@ -44,9 +30,10 @@ useGsap(root, ({ motion }) => {
   <section ref="root" class="yog">
     <div class="yog__inner">
       <div class="yog__visual" aria-hidden="true">
-        <img src="/brand/burst.webp" alt="" width="300" height="180" class="yog__burst" loading="lazy" />
-        <img src="/cutouts/yogurt.webp" alt="" width="461" height="584" class="yog__cup" loading="lazy" />
-        <img src="/cutouts/pan.webp" alt="" width="670" height="397" class="yog__pan" loading="lazy" />
+        <div class="yog__stage">
+          <img src="/cutouts/yogurt.webp" alt="" width="461" height="584" class="yog__cup" loading="lazy" />
+        </div>
+        <img src="/cutouts/pan.webp" alt="" width="520" height="306" class="yog__pan" loading="lazy" />
       </div>
 
       <div class="yog__copy">
@@ -101,30 +88,32 @@ useGsap(root, ({ motion }) => {
     }
   }
 
-  &__burst {
+  // Escenario: el vaso vive dentro del círculo (overflow) en vez de flotar suelto sobre el fondo.
+  &__stage {
     position: absolute;
-    inset: 8% 0 auto;
-    width: 100%;
-    height: auto;
-    opacity: 0.9;
+    inset: 4%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 38%, $lime-light, $lime 70%);
+    box-shadow: inset 0 -18px 0 rgba($ink, 0.08);
+    overflow: hidden;
+    @include flex(row, flex-end, center);
   }
 
   &__cup {
-    position: absolute;
-    left: 22%;
-    top: 4%;
-    width: 52%;
+    width: 50%;
     height: auto;
-    filter: drop-shadow(0 24px 24px rgba($ink, 0.3));
+    margin-bottom: 9%;
+    filter: drop-shadow(0 18px 16px rgba($ink, 0.28));
+    will-change: transform;
   }
 
   &__pan {
     position: absolute;
-    right: -4%;
-    bottom: 4%;
-    width: 50%;
+    right: 2%;
+    bottom: 6%;
+    width: 42%;
     height: auto;
-    filter: drop-shadow(0 14px 14px rgba($ink, 0.25));
+    filter: drop-shadow(0 12px 12px rgba($ink, 0.25));
   }
 
   &__copy {
