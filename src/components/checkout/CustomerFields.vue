@@ -85,6 +85,11 @@ function onPhone(e: Event) {
 
   &__row {
     @include flex-cards(220px, 1rem);
+
+    // la base 220px solo aplica en fila (CheckoutField no la trae por defecto)
+    > :deep(.field) {
+      flex: 1 1 220px;
+    }
   }
 
   &__saved {
