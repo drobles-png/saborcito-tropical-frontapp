@@ -12,7 +12,8 @@ let inflight: Promise<void> | null = null
 
 async function load(force = false) {
   if (inflight) return inflight
-  if (menu.value && settings.value && !force) return
+  // tras un error solo reintenta reload(): si no, cada useMenu() de la página dispara otra petición
+  if (!force && ((menu.value && settings.value) || error.value)) return
   loading.value = true
   error.value = ''
   inflight = Promise.all([menuService.getMenu(), menuService.getSettings()])
