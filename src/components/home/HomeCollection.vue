@@ -19,7 +19,7 @@ useGsap(
   root,
   ({ motion, desktop }) => {
     if (!motion) return
-    const q = gsap.utils.selector(root)
+    const q = gsap.utils.selector(root.value)
     gsap.from(q('.col__script'), {
       scale: 0.4,
       rotation: -12,
