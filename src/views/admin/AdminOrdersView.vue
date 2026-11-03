@@ -168,6 +168,10 @@ const { tab, q, visible, loading, loadingMore, counts, freshIds, hasMore, load }
     @include from('md') {
       @include flex-cards(320px, 1rem);
       align-items: flex-start;
+
+      > * {
+        max-width: 440px; // un pedido solo no se estira a todo el ancho
+      }
     }
 
     @include from('xl') {
