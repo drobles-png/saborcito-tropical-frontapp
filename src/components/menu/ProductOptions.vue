@@ -151,15 +151,4 @@ const emit = defineEmits<{ toggle: [option: string, label: string, required: boo
     color: $coral-deep;
   }
 }
-
-@keyframes shake {
-  20%,
-  60% {
-    transform: translateX(-6px);
-  }
-  40%,
-  80% {
-    transform: translateX(6px);
-  }
-}
 </style>
