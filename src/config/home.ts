@@ -37,7 +37,23 @@ export const home = {
     counterLabel: 'años',
     since: 'Dos décadas en Guayaquil',
   },
+  how: {
+    title: 'Así de fácil se pide',
+    lead: 'Sin registrarte y sin llamar. Eliges, confirmas y ves en vivo cómo avanza tu pedido hasta tu puerta.',
+    ticketLabel: 'Ejemplo de comanda con los tres pasos',
+    code: 'ST-7K2Q9',
+    steps: [
+      { title: 'Elige tu antojo', text: 'Toca el + y listo. Si lleva sabor, te lo preguntamos.', state: 'Recibido', tone: 'received' },
+      { title: 'Confirma', text: 'Delivery o retiro, efectivo o transferencia. Tus datos se recuerdan.', state: 'En cocina', tone: 'kitchen' },
+      { title: 'Síguelo en vivo', text: 'Ves cada paso desde tu celular hasta que llega.', state: 'En camino', tone: 'road' },
+    ],
+    totalLabel: 'Total',
+    totalValue: '3 toques',
+    stamp: '¡listo!',
+  },
   visit: {
+    title: 'Te esperamos',
+    write: 'Escribir',
     hours: 'Horarios',
     branches: 'Sucursales',
     map: 'Cómo llegar',
