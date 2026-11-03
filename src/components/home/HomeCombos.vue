@@ -17,7 +17,7 @@ useGsap(
   root,
   ({ motion }) => {
     if (!motion) return
-    const q = gsap.utils.selector(root)
+    const q = gsap.utils.selector(root.value)
     // El fondo tribal se desliza más lento que el contenido.
     gsap.fromTo(q('.combos__bg'), { yPercent: -12 }, {
       yPercent: 12,
