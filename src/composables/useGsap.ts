@@ -56,6 +56,6 @@ export function revealBatch(targets: string, stagger = 0.08) {
     start: 'top 90%',
     once: true,
     onEnter: (els) =>
-      gsap.to(els, { autoAlpha: 1, y: 0, duration: 0.7, ease: 'back.out(1.4)', stagger, overwrite: true }),
+      gsap.to(els, { autoAlpha: 1, y: 0, duration: 0.7, ease: 'back.out(1.4)', stagger, overwrite: true, clearProps: 'transform' }),
   })
 }
