@@ -12,21 +12,29 @@ const splash = splashShape(11, 112)
 
 // depth: cuánto se mueve con el scroll y el puntero (más = más cerca de la cámara).
 const satellites = [
-  { src: '/cutouts/papas.webp', w: 725, h: 406, cls: 'papas', depth: 1.2 },
+  { src: '/cutouts/papas.webp', w: 420, h: 231, cls: 'papas', depth: 1.2 },
   { src: '/cutouts/yogurt.webp', w: 461, h: 584, cls: 'yogurt', depth: 0.8 },
-  { src: '/cutouts/bacon.webp', w: 724, h: 621, cls: 'bacon', depth: 1.6 },
-  { src: '/cutouts/salchipapa.webp', w: 900, h: 887, cls: 'salchi', depth: 1 },
-  { src: '/cutouts/chicken-pop.webp', w: 900, h: 578, cls: 'chicken', depth: 1.4 },
+  { src: '/cutouts/bacon.webp', w: 380, h: 255, cls: 'bacon', depth: 1.6 },
+  { src: '/cutouts/salchipapa.webp', w: 460, h: 447, cls: 'salchi', depth: 1 },
+  { src: '/cutouts/chicken-pop.webp', w: 460, h: 295, cls: 'chicken', depth: 1.4 },
 ]
 const tiles = [3, 6, 9]
 
-useGsap(root, ({ motion, hover }) => {
+/** Resuelve cuando la burger está decodificada (o a los 1.2 s, para no colgar la entrada en redes lentas). */
+function whenLoaded(img: HTMLImageElement | undefined): Promise<void> {
+  if (!img) return Promise.resolve()
+  const decoded = img.decode ? img.decode().catch(() => undefined) : Promise.resolve()
+  return Promise.race([decoded, new Promise<void>((r) => setTimeout(r, 1200))]).then(() => undefined)
+}
+
+useGsap(root, ({ motion, hover, desktop }) => {
   if (!motion) return
   const q = gsap.utils.selector(root.value)
 
-  // Entrada: el splash estalla, la burger cae con rebote y aplasta, los satélites saltan.
-  gsap
-    .timeline({ delay: 0.35 })
+  // Entrada en pausa hasta que la burger cargó: antes caía a medio descargar y se veía a saltos.
+  // Los .from() dejan todo en su estado inicial mientras tanto, así que nada parpadea.
+  const intro = gsap
+    .timeline({ paused: true })
     .from(q('.art__splash'), { scale: 0, rotation: -90, duration: 0.9, ease: 'back.out(2)' })
     .from(q('.art__drop'), { scale: 0, transformOrigin: '50% 50%', stagger: 0.04, duration: 0.4, ease: 'back.out(3)' }, '-=0.5')
     .from(q('.art__burger img'), { yPercent: -160, rotation: -18, duration: 0.95, ease: 'bounce.out' }, 0.15)
@@ -34,18 +42,22 @@ useGsap(root, ({ motion, hover }) => {
     .from(q('.art__sat'), { scale: 0, rotation: () => gsap.utils.random(-60, 60), stagger: 0.07, duration: 0.7, ease: 'back.out(2.2)' }, 0.75)
     .from(q('.art__sticker'), { scale: 0, rotation: -200, duration: 0.9, ease: 'back.out(1.6)' }, 1)
     .from(q('.art__tile'), { autoAlpha: 0, scale: 0.4, stagger: 0.1, duration: 0.6 }, 0.6)
+  whenLoaded(q('.art__burger img')[0] as HTMLImageElement | undefined).then(() => intro.play())
 
-  // Vida en reposo: flotan, la trama gira lento, la pegatina rueda.
-  q('.art__float').forEach((el, i) => {
-    gsap.to(el, { y: i % 2 ? 14 : -14, rotation: i % 2 ? 6 : -6, duration: 2.2 + i * 0.35, ease: 'sine.inOut', yoyo: true, repeat: -1 })
-  })
-  gsap.to(q('.art__burger img'), { y: -10, duration: 2.6, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: 1.6 })
-  gsap.to(q('.art__tile'), { rotation: '+=360', duration: 48, ease: 'none', repeat: -1 })
+  // Vida en reposo. En el celular solo flota la burger y gira la pegatina: nueve loops infinitos
+  // sobre imágenes con sombra hacían que el iPhone se arrastrara.
+  gsap.to(q('.art__burger img'), { y: -10, duration: 2.6, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: 1.8 })
   gsap.to(q('.art__ring'), { rotation: 360, duration: 14, ease: 'none', repeat: -1 })
-  gsap.to(q('.art__splash'), { rotation: 8, scale: 1.04, duration: 3.4, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: 1.4 })
+  if (desktop) {
+    q('.art__float').forEach((el, i) => {
+      gsap.to(el, { y: i % 2 ? 14 : -14, rotation: i % 2 ? 6 : -6, duration: 2.2 + i * 0.35, ease: 'sine.inOut', yoyo: true, repeat: -1 })
+    })
+    gsap.to(q('.art__tile'), { rotation: '+=360', duration: 48, ease: 'none', repeat: -1 })
+    gsap.to(q('.art__splash'), { rotation: 8, scale: 1.04, duration: 3.4, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: 1.4 })
+  }
 
-  // Parallax por scroll: cada pieza se va a su ritmo al bajar.
-  q('[data-depth]').forEach((el) => {
+  // Parallax por scroll: en desktop cada pieza a su ritmo; en el celular solo burger y splash.
+  q(desktop ? '[data-depth]' : '.art__burger, .art__splash').forEach((el) => {
     const depth = Number(el.dataset.depth)
     gsap.to(el, {
       y: -140 * depth,
@@ -94,7 +106,7 @@ useGsap(root, ({ motion, hover }) => {
     </div>
 
     <div class="art__burger" data-depth="0.6">
-      <img src="/cutouts/burger.webp" alt="" width="536" height="442" fetchpriority="high" />
+      <img src="/cutouts/burger.webp" alt="" width="760" height="659" fetchpriority="high" decoding="async" />
     </div>
 
     <div class="art__sticker" data-depth="1.1">
@@ -149,6 +161,12 @@ useGsap(root, ({ motion, hover }) => {
     height: auto;
     overflow: visible;
     fill: $coral;
+  }
+
+  // capa propia: la sombra (filter) se rasteriza una vez y el movimiento solo traslada la capa
+  &__burger,
+  &__sat {
+    will-change: transform;
   }
 
   &__burger {
