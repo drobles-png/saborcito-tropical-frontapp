@@ -32,8 +32,18 @@ const icons: Record<string, string> = {
 <style scoped lang="scss">
 .toasts {
   position: fixed;
-  bottom: 1.4rem;
-  right: 1.4rem;
+  // arriba en móvil: abajo tapaba la CartBar y el botón "Agregar" del sheet
+  top: calc(env(safe-area-inset-top) + 0.8rem);
+  left: 0.8rem;
+  right: 0.8rem;
+  margin-inline: auto;
+
+  @include from('md') {
+    top: auto;
+    left: auto;
+    bottom: 1.4rem;
+    right: 1.4rem;
+  }
   @include flex(column, stretch, flex-start, 0.6rem);
   z-index: 300;
   max-width: min(360px, calc(100vw - 2.8rem));
