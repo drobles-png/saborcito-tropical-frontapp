@@ -55,8 +55,10 @@ useGsap(
   <section v-if="loading || items.length" ref="root" class="col">
     <div class="col__inner">
       <header class="col__head">
-        <p class="col__eyebrow">{{ copy.eyebrow }}</p>
-        <h2 class="col__script">{{ copy.script }}</h2>
+        <h2 class="col__title">
+          <span class="col__eyebrow">{{ copy.eyebrow }}</span>
+          <span class="col__script">{{ copy.script }}</span>
+        </h2>
         <p class="col__lead">{{ copy.lead }}</p>
         <span class="col__hint" aria-hidden="true">{{ home.collection.hint }} <i class="fa-solid fa-arrow-right"></i></span>
       </header>
@@ -102,6 +104,10 @@ useGsap(
     margin-bottom: 1.5rem;
   }
 
+  &__title {
+    @include flex(column, flex-start, flex-start, 0);
+  }
+
   &__eyebrow {
     @include display($display-md, 700);
     color: $surface;
@@ -110,7 +116,7 @@ useGsap(
   &__script {
     @include script(clamp(4.5rem, 2rem + 12vw, 10rem));
     color: $lime;
-    margin: -0.3em 0 0 0.4em;
+    margin: -0.12em 0 0 0.4em; // roza "Nueva" sin taparla, como en el menú impreso
     transform: rotate(-5deg);
     transform-origin: left center;
   }
