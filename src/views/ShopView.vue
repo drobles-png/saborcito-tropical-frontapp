@@ -48,8 +48,12 @@ watch(
   () => [route.query.c, loading.value] as const,
   async ([c, isLoading]) => {
     if (!c || isLoading) return
-    await nextTick()
-    document.getElementById(`cat-${c}`)?.scrollIntoView({ block: 'start' })
+    // La sección aparece tras la transición de página: esperarla unos frames.
+    for (let i = 0; i < 60; i++) {
+      const el = document.getElementById(`cat-${c}`)
+      if (el) return el.scrollIntoView({ behavior: 'instant', block: 'start' })
+      await new Promise(requestAnimationFrame)
+    }
   },
   { immediate: true },
 )
