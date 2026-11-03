@@ -68,6 +68,8 @@ watch(() => [props.active, props.categories.length], sync, { immediate: true })
     scrollbar-width: none;
     padding: 0.6rem 1.25rem;
     overscroll-behavior-x: contain;
+    // el borde derecho se desvanece: deja claro que la barra se desliza
+    mask-image: linear-gradient(90deg, #000 calc(100% - 48px), transparent);
 
     &::-webkit-scrollbar {
       display: none;
