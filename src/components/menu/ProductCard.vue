@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import PriceTag from '@/components/ui/PriceTag.vue'
 import ProductBadges from './ProductBadges.vue'
 import { useProductSheet } from '@/composables/useProductSheet'
 import { useQuickAdd } from '@/composables/useQuickAdd'
 import { imageUrl } from '@/utils/format'
 import { site } from '@/config/site'
+import { useCartStore } from '@/stores/cart'
 import type { Product } from '@/types'
 
 const props = defineProps<{ product: Product; eager?: boolean }>()
@@ -14,6 +15,9 @@ const sheet = useProductSheet()
 const quickAdd = useQuickAdd()
 const img = ref<HTMLImageElement | null>(null)
 const loaded = ref(false)
+const cart = useCartStore()
+// cuántas unidades de este producto ya van en el pedido (todas sus variantes)
+const inCart = computed(() => cart.lines.reduce((n, l) => (l.productId === props.product.id ? n + l.qty : n), 0))
 const tilt = ref({ x: 0, y: 0 })
 
 // Tilt solo con mouse: en táctil la tarjeta se queda quieta.
@@ -68,6 +72,9 @@ function onMove(e: PointerEvent) {
           @click.stop="quickAdd(props.product, img)"
         >
           <i class="fa-solid fa-plus" aria-hidden="true"></i>
+          <Transition name="count">
+            <span v-if="inCart" :key="inCart" class="card__count">{{ inCart }}<span class="visually-hidden"> en tu pedido</span></span>
+          </Transition>
         </button>
       </div>
     </div>
@@ -192,6 +199,24 @@ function onMove(e: PointerEvent) {
     padding-top: 0.5rem;
   }
 
+  &__count {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    min-width: 22px;
+    height: 22px;
+    padding-inline: 5px;
+    border-radius: $radius-pill;
+    background: $lime;
+    color: $ink;
+    border: 2px solid $surface;
+    font-family: $font-display;
+    font-weight: 700;
+    font-size: 0.78rem;
+    line-height: 18px;
+    text-align: center;
+  }
+
   &__add {
     position: relative;
     z-index: 2;
@@ -238,5 +263,12 @@ function onMove(e: PointerEvent) {
       color: $ink-muted;
     }
   }
+}
+
+.count-enter-active {
+  transition: transform 0.3s $ease;
+}
+.count-enter-from {
+  transform: scale(0.3);
 }
 </style>
