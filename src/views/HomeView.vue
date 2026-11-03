@@ -16,7 +16,7 @@ const features = [
       <p class="hero__text">{{ site.description }}</p>
       <div class="hero__actions">
         <RouterLink to="/login" class="btn btn--primary">Empezar</RouterLink>
-        <a v-if="site.whatsapp" :href="whatsappLink()" class="btn btn--ghost" target="_blank" rel="noopener">
+        <a v-if="site.whatsapp" :href="whatsappLink('')" class="btn btn--ghost" target="_blank" rel="noopener">
           <i class="fa-brands fa-whatsapp"></i> Escríbenos
         </a>
       </div>

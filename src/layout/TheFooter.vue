@@ -24,7 +24,7 @@ const year = new Date().getFullYear()
         <a :href="`mailto:${site.email}`">
           <i class="fa-solid fa-envelope"></i> {{ site.email }}
         </a>
-        <a v-if="site.whatsapp" :href="whatsappLink()" target="_blank" rel="noopener">
+        <a v-if="site.whatsapp" :href="whatsappLink('')" target="_blank" rel="noopener">
           <i class="fa-brands fa-whatsapp"></i> WhatsApp
         </a>
       </div>

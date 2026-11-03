@@ -2,11 +2,9 @@
 import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { site } from '@/config/site'
-import { useUserStore } from '@/stores/user'
 import { useBodyScroll } from '@/composables/useBodyScroll'
 
 const route = useRoute()
-const userStore = useUserStore()
 const mobileOpen = ref(false)
 
 useBodyScroll(mobileOpen)
@@ -24,10 +22,6 @@ watch(() => route.fullPath, () => (mobileOpen.value = false))
         <RouterLink v-for="link in site.nav" :key="link.to" :to="link.to" class="header__link">
           {{ link.label }}
         </RouterLink>
-        <RouterLink v-if="userStore.isAuthenticated" to="/cuenta" class="header__link">
-          Mi cuenta
-        </RouterLink>
-        <RouterLink v-else to="/login" class="btn btn--primary header__cta">Ingresar</RouterLink>
       </nav>
 
       <button
