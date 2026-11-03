@@ -81,12 +81,6 @@ const socials = computed(() =>
   background: $ink;
   color: rgba($surface, 0.8);
   margin-top: auto;
-  // espacio para la CartBar fija en móvil
-  padding-bottom: calc(env(safe-area-inset-bottom) + 72px);
-
-  @include from('md') {
-    padding-bottom: 0;
-  }
 
   &__band {
     background: $lime;
