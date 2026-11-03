@@ -8,7 +8,7 @@ const copy = home.notFound
 
 useGsap(root, ({ motion }) => {
   if (!motion) return
-  const q = gsap.utils.selector(root)
+  const q = gsap.utils.selector(root.value)
   // Las papas caen de la bandeja… y rebotan.
   gsap
     .timeline()
