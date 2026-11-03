@@ -32,8 +32,8 @@ const icons: Record<string, string> = {
 <style scoped lang="scss">
 .toasts {
   position: fixed;
-  // arriba en móvil: abajo tapaba la CartBar y el botón "Agregar" del sheet
-  top: calc(env(safe-area-inset-top) + 0.8rem);
+  // móvil: bajo el header (encima tapaba la bolsa que rebota; abajo, la CartBar y el pie del carrito)
+  top: calc(env(safe-area-inset-top) + var(--header-h) + 0.5rem);
   left: 0.8rem;
   right: 0.8rem;
   margin-inline: auto;
