@@ -1,34 +1,18 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { gsap, ScrollTrigger, useGsap } from '@/composables/useGsap'
+import { gsap, useGsap } from '@/composables/useGsap'
 import { site } from '@/config/site'
 
 const root = ref<HTMLElement | null>(null)
 const words = site.marquee
 const tileFor = (i: number) => `/brand/tile-${(i % 10) + 1}.webp`
 
+// Velocidad constante: acelerar e invertir con el scroll daba tirones con la inercia del iPhone.
 useGsap(root, ({ motion }) => {
   if (!motion) return
   const q = gsap.utils.selector(root.value)
-  // Cada pista está duplicada: mover -50% y repetir = cinta infinita sin costura.
-  const front = gsap.to(q('.mq__band--front .mq__track'), { xPercent: -50, duration: 28, ease: 'none', repeat: -1 })
-
-  // Con timeScale negativo un repeat:-1 se frena en 0: arrancar lejos del inicio.
-  front.totalTime(front.duration() * 500)
-
-  // La velocidad del scroll acelera la cinta y el sentido del scroll la invierte.
-  let dir = 1
-  ScrollTrigger.create({
-    trigger: root.value,
-    start: 'top bottom',
-    end: 'bottom top',
-    onUpdate: (self) => {
-      dir = self.direction
-      const boost = gsap.utils.clamp(1, 6, 1 + Math.abs(self.getVelocity()) / 400)
-      gsap.to(front, { timeScale: boost * dir, duration: 0.2, overwrite: true })
-      gsap.to(front, { timeScale: dir, duration: 1.2, delay: 0.25, ease: 'power2.out' })
-    },
-  })
+  // La pista está duplicada: mover -50% y repetir = cinta infinita sin costura.
+  gsap.to(q('.mq__band--front .mq__track'), { xPercent: -50, duration: 32, ease: 'none', repeat: -1, force3D: true })
 })
 </script>
 
