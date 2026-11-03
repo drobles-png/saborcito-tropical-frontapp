@@ -234,6 +234,8 @@ useGsap(root, ({ motion, hover }) => {
   }
 
   &__price {
+    position: relative;
+    z-index: 1; // sobre el anillo de texto girando
     font-size: clamp(1.4rem, 5vw, 2.1rem);
   }
 }
