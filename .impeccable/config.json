@@ -1,0 +1,23 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "bounce-easing",
+        "value": "cubic-bezier(0.34, 1.56, 0.64, 1)",
+        "createdAt": "2026-11-03T21:45:37.095Z",
+        "reason": "Claude decided: overshoot corto y deliberado para la marca jovial de comida rápida (CartBar al entrar, checks del checkout); el cliente pidió animaciones vibrantes"
+      },
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "src/components/admin/orders/OrderItems.vue"
+        ],
+        "createdAt": "2026-11-03T21:45:37.536Z",
+        "reason": "Claude decided: borde lateral funcional para que la cocina no pase por alto las notas del cliente (sin cebolla) en la comanda"
+      }
+    ]
+  }
+}
