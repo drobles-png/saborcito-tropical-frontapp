@@ -12,11 +12,9 @@ useGsap(root, ({ motion }) => {
   const q = gsap.utils.selector(root.value)
   // Cada pista está duplicada: mover -50% y repetir = cinta infinita sin costura.
   const front = gsap.to(q('.mq__band--front .mq__track'), { xPercent: -50, duration: 28, ease: 'none', repeat: -1 })
-  const back = gsap.fromTo(q('.mq__band--back .mq__track'), { xPercent: -50 }, { xPercent: 0, duration: 34, ease: 'none', repeat: -1 })
 
   // Con timeScale negativo un repeat:-1 se frena en 0: arrancar lejos del inicio.
   front.totalTime(front.duration() * 500)
-  back.totalTime(back.duration() * 500)
 
   // La velocidad del scroll acelera la cinta y el sentido del scroll la invierte.
   let dir = 1
@@ -27,8 +25,8 @@ useGsap(root, ({ motion }) => {
     onUpdate: (self) => {
       dir = self.direction
       const boost = gsap.utils.clamp(1, 6, 1 + Math.abs(self.getVelocity()) / 400)
-      gsap.to([front, back], { timeScale: boost * dir, duration: 0.2, overwrite: true })
-      gsap.to([front, back], { timeScale: dir, duration: 1.2, delay: 0.25, ease: 'power2.out' })
+      gsap.to(front, { timeScale: boost * dir, duration: 0.2, overwrite: true })
+      gsap.to(front, { timeScale: dir, duration: 1.2, delay: 0.25, ease: 'power2.out' })
     },
   })
 })
@@ -36,13 +34,6 @@ useGsap(root, ({ motion }) => {
 
 <template>
   <section ref="root" class="mq" aria-label="Lo que se te antoja">
-    <div class="mq__band mq__band--back" aria-hidden="true">
-      <div class="mq__track">
-        <template v-for="copy in 2" :key="copy">
-          <span v-for="w in words" :key="`${copy}${w}`" class="mq__item">{{ w }} <i class="fa-solid fa-star"></i></span>
-        </template>
-      </div>
-    </div>
     <div class="mq__band mq__band--front">
       <ul class="mq__track">
         <template v-for="copy in 2" :key="copy">
@@ -74,13 +65,6 @@ useGsap(root, ({ motion }) => {
       transform: rotate(-3deg) scale(1.08);
       box-shadow: 0 14px 30px -14px rgba($ink, 0.5);
     }
-
-    &--back {
-      position: absolute;
-      inset: 50% 0 auto;
-      background: $coral;
-      transform: translateY(-50%) rotate(2.5deg) scale(1.08);
-    }
   }
 
   &__track {
@@ -104,17 +88,6 @@ useGsap(root, ({ motion }) => {
     img {
       height: 1.2em;
       width: auto;
-    }
-  }
-
-  &__band--back &__item {
-    font-size: clamp(1rem, 0.8rem + 1vw, 1.4rem);
-    color: $surface;
-    gap: 1rem;
-
-    i {
-      font-size: 0.7em;
-      color: $lime;
     }
   }
 }
