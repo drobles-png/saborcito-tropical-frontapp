@@ -16,14 +16,14 @@ useGsap(root, ({ motion }) => {
     .from(q('.nf__food'), { y: -300, rotation: 180, autoAlpha: 0, duration: 1.1, ease: 'bounce.out' }, 0.2)
     .from(q('.nf__copy > *'), { y: 20, autoAlpha: 0, stagger: 0.08, duration: 0.5 }, 0.8)
   gsap.to(q('.nf__food'), { rotation: 8, y: -8, duration: 1.8, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: 1.4 })
-})
+}, () => true, { eager: true })
 </script>
 
 <template>
   <section ref="root" class="nf">
     <div class="nf__code" aria-hidden="true">
       <span class="nf__digit">4</span>
-      <img src="/cutouts/salchipapa.webp" alt="" width="900" height="887" class="nf__food" />
+      <img src="/cutouts/salchipapa.webp" alt="" width="479" height="485" class="nf__food" />
       <span class="nf__digit">4</span>
     </div>
     <div class="nf__copy">
