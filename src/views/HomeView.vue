@@ -10,6 +10,7 @@ import HomeYogurt from '@/components/home/HomeYogurt.vue'
 import HomeHow from '@/components/home/HomeHow.vue'
 import HomeStory from '@/components/home/HomeStory.vue'
 import HomeVisit from '@/components/home/HomeVisit.vue'
+import LazyMount from '@/components/ui/LazyMount.vue'
 </script>
 
 <template>
@@ -17,14 +18,14 @@ import HomeVisit from '@/components/home/HomeVisit.vue'
     <LastOrderStrip />
     <HomeHero />
     <HomeMarquee />
-    <HomeCategories />
-    <HomeFeatured />
-    <HomeCollection />
-    <HomeCombos />
-    <HomeYogurt />
-    <HomeHow />
-    <HomeStory />
-    <HomeVisit />
+    <LazyMount><HomeCategories /></LazyMount>
+    <LazyMount><HomeFeatured /></LazyMount>
+    <LazyMount><HomeCollection /></LazyMount>
+    <LazyMount><HomeCombos /></LazyMount>
+    <LazyMount><HomeYogurt /></LazyMount>
+    <LazyMount><HomeHow /></LazyMount>
+    <LazyMount><HomeStory /></LazyMount>
+    <LazyMount><HomeVisit /></LazyMount>
   </div>
 </template>
 
