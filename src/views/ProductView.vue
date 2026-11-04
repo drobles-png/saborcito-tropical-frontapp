@@ -53,7 +53,7 @@ watch(() => route.params.slug, (slug) => slug && load(), { immediate: true })
     </div>
 
     <div v-else-if="error" class="pv__state">
-      <img src="/cutouts/burger.webp" alt="" width="536" height="442" class="pv__state-img" />
+      <img src="/cutouts/burger.webp" alt="" width="776" height="721" class="pv__state-img" />
       <h1 class="pv__state-title">{{ error.status === 404 ? home.product.notFound : home.states.error }}</h1>
       <div class="pv__state-actions">
         <button v-if="error.status !== 404" type="button" class="btn btn--dark" @click="load">
