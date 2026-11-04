@@ -12,11 +12,11 @@ const splash = splashShape(11, 112)
 
 // depth: cuánto se mueve con el scroll y el puntero (más = más cerca de la cámara).
 const satellites = [
-  { src: '/cutouts/papas.webp', w: 420, h: 231, cls: 'papas', depth: 1.2 },
-  { src: '/cutouts/yogurt.webp', w: 461, h: 584, cls: 'yogurt', depth: 0.8 },
-  { src: '/cutouts/bacon.webp', w: 380, h: 255, cls: 'bacon', depth: 1.6 },
-  { src: '/cutouts/salchipapa.webp', w: 460, h: 447, cls: 'salchi', depth: 1 },
-  { src: '/cutouts/chicken-pop.webp', w: 460, h: 295, cls: 'chicken', depth: 1.4 },
+  { src: '/cutouts/papas.webp', w: 420, h: 249, cls: 'papas', depth: 1.2 },
+  { src: '/cutouts/yogurt.webp', w: 479, h: 622, cls: 'yogurt', depth: 0.8 },
+  { src: '/cutouts/bacon.webp', w: 381, h: 270, cls: 'bacon', depth: 1.6 },
+  { src: '/cutouts/salchipapa.webp', w: 479, h: 485, cls: 'salchi', depth: 1 },
+  { src: '/cutouts/chicken-pop.webp', w: 477, h: 330, cls: 'chicken', depth: 1.4 },
 ]
 const tiles = [3, 6, 9]
 
@@ -80,7 +80,7 @@ useGsap(root, ({ motion, hover, desktop }) => {
   }
   window.addEventListener('pointermove', onMove)
   return () => window.removeEventListener('pointermove', onMove)
-})
+}, () => true, { eager: true })
 </script>
 
 <template>
@@ -106,7 +106,7 @@ useGsap(root, ({ motion, hover, desktop }) => {
     </div>
 
     <div class="art__burger" data-depth="0.6">
-      <img src="/cutouts/burger.webp" alt="" width="760" height="659" fetchpriority="high" decoding="async" />
+      <img src="/cutouts/burger.webp" alt="" width="776" height="721" fetchpriority="high" decoding="async" />
     </div>
 
     <div class="art__sticker" data-depth="1.1">
@@ -178,7 +178,7 @@ useGsap(root, ({ motion, hover, desktop }) => {
     img {
       width: 100%;
       height: auto;
-      filter: drop-shadow(0 24px 22px rgba($ink, 0.35));
+      will-change: transform; // la sombra viene horneada en la imagen: moverla no repinta nada
     }
   }
 
@@ -188,7 +188,6 @@ useGsap(root, ({ motion, hover, desktop }) => {
     img {
       width: 100%;
       height: auto;
-      filter: drop-shadow(0 14px 14px rgba($ink, 0.28));
     }
 
     &--papas {
