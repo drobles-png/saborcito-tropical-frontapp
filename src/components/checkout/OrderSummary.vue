@@ -30,7 +30,7 @@ const fee = computed(() => (deliveryFee.value ? formatCents(deliveryFee.value) :
     <div id="sum-body" class="sum__body" :class="{ 'sum__body--open': open }">
       <ul class="sum__lines">
         <li v-for="l in cart.lines" :key="l.key" class="sum__line">
-          <span class="sum__img"><img :src="imageUrl(l.image)" :alt="l.name" width="48" height="48" /></span>
+          <span class="sum__img"><img :src="imageUrl(l.image, 'sm')" :alt="l.name" width="48" height="48" /></span>
           <span class="sum__qty">{{ l.qty }}×</span>
           <span class="sum__name">
             {{ l.name }}
