@@ -34,7 +34,17 @@ export function formatTime(value: string | Date): string {
   return time.format(typeof value === 'string' ? new Date(value) : value)
 }
 
-/** Las imágenes del seed son rutas públicas del front; las de Cloudinary, absolutas. */
-export function imageUrl(src: string): string {
-  return src || '/brand/icon-192.png'
+/**
+ * Las imágenes del seed son rutas públicas del front; las de Cloudinary, absolutas.
+ * 'sm' (tarjetas, carrito, miniaturas) pide una versión de 560 px: las fotos originales
+ * son de 1200–2048 px y decodificar decenas de ellas trababa el celular al cargar.
+ */
+export function imageUrl(src: string, size: 'sm' | 'full' = 'full'): string {
+  if (!src) return '/brand/icon-192.png'
+  if (size === 'full') return src
+  if (src.startsWith('/menu/') && !src.startsWith('/menu/sm/')) return src.replace('/menu/', '/menu/sm/')
+  if (src.includes('res.cloudinary.com') && src.includes('/upload/')) {
+    return src.replace('/upload/', '/upload/w_560,c_limit,f_auto,q_auto/')
+  }
+  return src
 }
