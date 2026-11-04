@@ -29,7 +29,7 @@ const summary = computed(() => {
 
     <div v-else-if="last && menu" class="strip">
       <span class="strip__thumbs" aria-hidden="true">
-        <img v-for="(i, n) in last.items.slice(0, 3)" :key="n" :src="imageUrl(i.image)" alt="" width="40" height="40" />
+        <img v-for="(i, n) in last.items.slice(0, 3)" :key="n" :src="imageUrl(i.image, 'sm')" alt="" width="40" height="40" />
       </span>
       <span class="strip__text">
         <small>¿Lo de siempre?</small>
