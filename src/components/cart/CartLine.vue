@@ -20,7 +20,7 @@ const qty = computed({
 <template>
   <li class="line">
     <div class="line__img">
-      <img :src="imageUrl(line.image)" :alt="line.name" width="72" height="72" loading="lazy" />
+      <img :src="imageUrl(line.image, 'sm')" :alt="line.name" width="72" height="72" loading="lazy" />
     </div>
     <div class="line__body">
       <div class="line__top">
