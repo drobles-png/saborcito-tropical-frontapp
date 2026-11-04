@@ -69,7 +69,7 @@ useGsap(
         </template>
         <article v-for="(p, i) in items" v-else :key="p.id" class="col__item">
           <span class="col__num" aria-hidden="true">0{{ i + 1 }}</span>
-          <img :src="imageUrl(p.image)" :alt="p.name" width="600" height="600" loading="lazy" class="col__img" />
+          <img :src="imageUrl(p.image, 'sm')" :alt="p.name" width="600" height="600" loading="lazy" class="col__img" />
           <h3 class="col__name">{{ p.name }}</h3>
           <p class="col__desc">{{ p.description }}</p>
           <div class="col__foot">
