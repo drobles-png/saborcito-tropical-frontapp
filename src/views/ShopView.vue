@@ -75,6 +75,7 @@ useGsap(
     revealBatch('.shop__section .card', 0.06)
   },
   () => !loading.value && products.value.length > 0,
+  { eager: true },
 )
 </script>
 
@@ -96,7 +97,7 @@ useGsap(
     <ShopSkeleton v-if="loading" />
 
     <div v-else-if="error" class="shop__state">
-      <img src="/cutouts/papas.webp" alt="" width="725" height="406" class="shop__state-img" />
+      <img src="/cutouts/papas.webp" alt="" width="420" height="249" class="shop__state-img" />
       <p class="shop__state-title">{{ home.states.error }}</p>
       <button type="button" class="btn btn--cta" @click="reload">
         <i class="fa-solid fa-rotate-right" aria-hidden="true"></i> {{ home.states.retry }}
@@ -108,7 +109,7 @@ useGsap(
 
       <Transition name="fade" mode="out-in">
         <div v-if="!sections.length" key="empty" class="shop__state">
-          <img src="/cutouts/salchipapa.webp" alt="" width="900" height="887" class="shop__state-img" />
+          <img src="/cutouts/salchipapa.webp" alt="" width="479" height="485" class="shop__state-img" />
           <p class="shop__state-title">{{ home.states.noResults }} “{{ query }}”</p>
           <p class="shop__state-text">{{ site.shop.empty }}</p>
           <button type="button" class="btn btn--dark" @click="query = ''">{{ home.states.clear }}</button>
