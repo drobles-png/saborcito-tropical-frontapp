@@ -62,7 +62,7 @@ useGsap(
         <span class="cats__name">{{ c.name }}</span>
         <span v-if="c.tagline" class="cats__tagline">{{ c.tagline }}</span>
         <span class="cats__photo">
-          <img v-if="photo(c.id)" :src="imageUrl(photo(c.id)!)" :alt="''" width="300" height="300" loading="lazy" />
+          <img v-if="photo(c.id)" :src="imageUrl(photo(c.id)!, 'sm')" :alt="''" width="300" height="300" loading="lazy" />
         </span>
         <span class="cats__go" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></span>
       </RouterLink>
