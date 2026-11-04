@@ -46,7 +46,7 @@ useGsap(root, ({ motion }) => {
     ease: 'none',
     scrollTrigger: { trigger: root.value, start: 'top top', end: 'bottom top', scrub: true },
   })
-})
+}, () => true, { eager: true })
 </script>
 
 <template>
