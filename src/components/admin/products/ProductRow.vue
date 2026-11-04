@@ -13,7 +13,7 @@ const t = admin.products
 <template>
   <article class="prow" :class="{ 'prow--hidden': !product.isPublished, 'prow--out': !product.isAvailable }">
     <RouterLink :to="{ name: 'AdminProductEdit', params: { id: product.id } }" class="prow__img">
-      <img :src="imageUrl(product.image)" :alt="product.name" width="64" height="64" loading="lazy" />
+      <img :src="imageUrl(product.image, 'sm')" :alt="product.name" width="64" height="64" loading="lazy" />
     </RouterLink>
 
     <div class="prow__body">
