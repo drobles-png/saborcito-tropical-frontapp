@@ -31,9 +31,9 @@ useGsap(root, ({ motion }) => {
     <div class="yog__inner">
       <div class="yog__visual" aria-hidden="true">
         <div class="yog__stage">
-          <img src="/cutouts/yogurt.webp" alt="" width="461" height="584" class="yog__cup" loading="lazy" />
+          <img src="/cutouts/yogurt.webp" alt="" width="479" height="622" class="yog__cup" loading="lazy" />
         </div>
-        <img src="/cutouts/pan.webp" alt="" width="520" height="306" class="yog__pan" loading="lazy" />
+        <img src="/cutouts/pan.webp" alt="" width="532" height="349" class="yog__pan" loading="lazy" />
       </div>
 
       <div class="yog__copy">
@@ -103,7 +103,6 @@ useGsap(root, ({ motion }) => {
     width: 50%;
     height: auto;
     margin-bottom: 9%;
-    filter: drop-shadow(0 18px 16px rgba($ink, 0.28));
     will-change: transform;
   }
 
@@ -113,7 +112,6 @@ useGsap(root, ({ motion }) => {
     bottom: 6%;
     width: 42%;
     height: auto;
-    filter: drop-shadow(0 12px 12px rgba($ink, 0.25));
   }
 
   &__copy {
