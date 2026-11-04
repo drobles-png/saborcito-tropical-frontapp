@@ -43,7 +43,7 @@ function onMove(e: PointerEvent) {
         ref="img"
         class="card__img"
         :class="{ 'card__img--in': loaded }"
-        :src="imageUrl(product.image)"
+        :src="imageUrl(product.image, 'sm')"
         :alt="product.name"
         width="600"
         height="600"
