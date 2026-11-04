@@ -27,7 +27,7 @@ const place = computed(() =>
     <h2 class="detail__title">{{ copy.detail }}</h2>
     <ul class="detail__items">
       <li v-for="(item, i) in order.items" :key="i" class="detail__item">
-        <span class="detail__img"><img :src="imageUrl(item.image)" :alt="item.name" width="52" height="52" loading="lazy" /></span>
+        <span class="detail__img"><img :src="imageUrl(item.image, 'sm')" :alt="item.name" width="52" height="52" loading="lazy" /></span>
         <span class="detail__name">
           <strong>{{ item.qty }}× {{ item.name }}</strong>
           <small v-if="item.options.length">{{ item.options.map((o) => o.choice).join(' · ') }}</small>
