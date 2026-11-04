@@ -35,7 +35,7 @@ function pick(p: Product) {
     <ul class="sugg__list">
       <li v-for="p in items" :key="p.id">
         <button type="button" class="sugg__item" :aria-label="`Agregar ${p.name}`" @click="pick(p)">
-          <img :src="imageUrl(p.image)" alt="" width="56" height="56" loading="lazy" />
+          <img :src="imageUrl(p.image, 'sm')" alt="" width="56" height="56" loading="lazy" />
           <span class="sugg__name">{{ p.name }}</span>
           <PriceTag :cents="p.price" size="sm" />
           <span class="sugg__plus" aria-hidden="true"><i class="fa-solid fa-plus"></i></span>
